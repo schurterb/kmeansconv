@@ -1,0 +1,22 @@
+#!/bin/bash - 
+
+#script to train all networks in networks folder
+
+netfolder=networks
+nets=( $netfolder/* )
+
+for net in "${nets[@]}"
+do
+	echo "Begining Training for $net"
+	python train.py -f $net
+	echo "Training Complete for $net"
+	sleep 10
+done
+
+for net in "${nets[@]}"
+do
+	echo "Begining Testing for $net"
+	python test.py -f $net
+	echo "Testing Complete for $net"
+	sleep 10
+done

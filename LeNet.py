@@ -15,8 +15,7 @@ from trainer import Trainer
 
 testnet = CNN2D()
 
-testtrainer = Trainer(testnet, epoch_length=1000)
-
+testtrainer = Trainer(testnet, epoch_length=100)
 
 testtrainer.train(5)
 

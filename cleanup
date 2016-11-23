@@ -1,0 +1,15 @@
+#!/bin/bash - 
+
+#script to clean networks folder
+
+netfolder=networks
+nets=( $netfolder/* )
+home=`pwd`
+
+for net in "${nets[@]}"
+do
+	echo "Cleaning $net"
+	cd $net
+	rm -rf log weights results
+	cd $home
+done
