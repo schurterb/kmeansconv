@@ -72,23 +72,24 @@ def trainNetwork(configuration):
             print("FATAL: Unable to load trainer: ",e.with_traceback)
             return
     else:
-        try:
-            print("Creating Trainer")
-            trainer = Trainer(network,
-                              cost_function=config.get('Trainer', 'cost_function'),
-                              learning_method=config.get('Trainer', 'learning_method'),
-                              batch_size=config.getint('Trainer', 'batch_size'),
-                              learning_rate=config.getfloat('Trainer', 'learning_rate'),
-                              beta1=config.getfloat('Trainer', 'beta1'),
-                              beta2=config.getfloat('Trainer', 'beta2'),
-                              damping=config.getfloat('Trainer', 'damping'),
-                              epoch_length=config.getint('Trainer', 'epoch_length'),
-                              log_interval=config.getint('Trainer', 'log_interval'),                              
-                              data_folder=config.get('General', 'data_folder'))
-        except Exception as e:
-            print("FATAL: Unable to create trainer: ",e.with_traceback)
-            print(e.__traceback__)
-            return
+#        try:
+        print("Creating Trainer")
+        trainer = Trainer(network,
+                          training_type=config.get('Trainer', 'training_type'),
+                          cost_function=config.get('Trainer', 'cost_function'),
+                          learning_method=config.get('Trainer', 'learning_method'),
+                          batch_size=config.getint('Trainer', 'batch_size'),
+                          learning_rate=config.getfloat('Trainer', 'learning_rate'),
+                          beta1=config.getfloat('Trainer', 'beta1'),
+                          beta2=config.getfloat('Trainer', 'beta2'),
+                          damping=config.getfloat('Trainer', 'damping'),
+                          epoch_length=config.getint('Trainer', 'epoch_length'),
+                          log_interval=config.getint('Trainer', 'log_interval'),                              
+                          data_folder=config.get('General', 'data_folder'))
+#        except Exception as e:
+#            print("FATAL: Unable to create trainer: ",e.with_traceback)
+#            print(e.__traceback__)
+#            return
 
 
     #Timing event

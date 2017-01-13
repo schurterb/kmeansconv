@@ -1,0 +1,21 @@
+INFO:trainer:
+### Convolutional Network Trainer Log ###
+
+Network Parameters
+num convolution layers = 3
+num convolution filters = 50
+convolution filter size = 7
+regression layers = (100, 100, 10)
+num classes = 10
+activation = tanh
+
+Trainer Parameters
+cost function = class
+training type = unsupervised
+learning method = RMSProp
+batch size = 500
+learning rate = 5e-06
+beta 2 = 0.9
+damping term = 1e-08
+
+

@@ -1,0 +1,44 @@
+INFO:trainer:
+### Convolutional Network Trainer Log ###
+
+Network Parameters
+num convolution layers = 3
+num convolution filters = 50
+convolution filter size = 7
+regression layers = (100, 100, 10)
+num classes = 10
+activation = tanh
+
+Trainer Parameters
+cost function = MSE
+learning method = StandardSGD
+batch size = 50
+learning rate = 0.0001
+
+
+INFO:sh.command:<Command '/usr/bin/mkdir -p ne...(28 more)' call_args {'err_bufsize': 1, '...(495 more)>: starting process
+INFO:sh.command:<Command '/usr/bin/mkdir -p ne...(27 more)' call_args {'err_bufsize': 1, '...(495 more)>: starting process
+INFO:trainer:
+-- Status at epoch: 0 --
+Change in average cost: 0.0665657073259 -> 0.0
+     Improvement of 0.0665657073259 or 100.0%
+Number of examples seen: 50000000
+Training time: 154.5308468833333 minutes
+
+
+INFO:trainer:
+-- Status at epoch: 1 --
+Change in average cost: 0.0361078009009 -> 0.0
+     Improvement of 0.0361078009009 or 100.0%
+Number of examples seen: 50000000
+Training time: 154.57354674999996 minutes
+
+
+INFO:trainer:
+-- Status at epoch: 2 --
+Change in average cost: 0.0235019959509 -> 0.0
+     Improvement of 0.0235019959509 or 100.0%
+Number of examples seen: 50000000
+Training time: 154.46873218333332 minutes
+
+

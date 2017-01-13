@@ -113,7 +113,7 @@ class RMSProp:
                             theano.config.floatX), name='vrw'+str(layer)) ,)
                     self.vrb = self.vrb + (theano.shared(np.genfromtxt(
                         self.load_folder+'reglayer_'+str(layer)+'_bias_var.csv', 
-                        delimiter=',').reshape(self.regnet[layer,0]).astype(
+                        delimiter=',').reshape(self.regnet[layer,1]).astype(
                             theano.config.floatX), name='vrb'+str(layer)) ,)
         
         if(len(self.vrw) == 0):
@@ -122,7 +122,7 @@ class RMSProp:
                         self.regnet[layer,:], dtype=theano.config.floatX),
                             name='vrw'+str(layer)) ,)
                     self.vrb = self.vrb + (theano.shared(np.ones(
-                            self.regnet[layer,0], dtype=theano.config.floatX), 
+                            self.regnet[layer,1], dtype=theano.config.floatX), 
                                 name='vrb'+str(layer)) ,)
                                 
         

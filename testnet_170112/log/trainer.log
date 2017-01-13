@@ -1,0 +1,21 @@
+INFO:trainer:
+### Convolutional Network Trainer Log ###
+
+Network Parameters
+num convolution layers = 3
+num convolution filters = 50
+convolution filter size = 7
+regression layers = (100, 100, 10)
+num classes = 10
+activation = tanh
+
+Trainer Parameters
+cost function = class
+training type = unsupervised
+learning method = StandardSGD
+batch size = 500
+learning rate = 5e-06
+
+
+INFO:sh.command:<Command '/usr/bin/mkdir -p te...(18 more)' call_args {'cwd': None, 'no_pi...(495 more)>: starting process
+INFO:sh.command:<Command '/usr/bin/mkdir -p te...(17 more)' call_args {'cwd': None, 'no_pi...(495 more)>: starting process

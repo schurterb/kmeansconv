@@ -10,7 +10,6 @@ Designed for use with the cnnclassifier.
 """
 
 import os
-from sh import mkdir
 
 import theano
 from theano import tensor as T
@@ -93,9 +92,9 @@ class ADAM:
             for param, m, v in zip(b, mb, vb)                   
         ]
         t_update = [
-            (self.t, self.t+1)
+            (self.t, self.t + 1)
         ]
-        return mw_updates + mb_updates + vw_updates + vb_updates + w_updates + b_updates + t_update
+        return mw_updates + mb_updates + vw_updates + vb_updates + w_updates + b_updates# + t_update
         
 
     def _prepare_convolution_velocity(self):
@@ -163,7 +162,7 @@ class ADAM:
                             theano.config.floatX), name='vrw'+str(layer)) ,)
                     self.vrb = self.vrb + (theano.shared(np.genfromtxt(
                         self.load_folder+'reglayer_'+str(layer)+'_bias_var.csv', 
-                        delimiter=',').reshape(self.regnet[layer,0]).astype(
+                        delimiter=',').reshape(self.regnet[layer,1]).astype(
                             theano.config.floatX), name='vrb'+str(layer)) ,)
         
         if(len(self.vrw) == 0):
@@ -172,7 +171,7 @@ class ADAM:
                         self.regnet[layer,:], dtype=theano.config.floatX),
                             name='vrw'+str(layer)) ,)
                     self.vrb = self.vrb + (theano.shared(np.ones(
-                            self.regnet[layer,0], dtype=theano.config.floatX), 
+                            self.regnet[layer,1], dtype=theano.config.floatX), 
                                 name='vrb'+str(layer)) ,)
                                 
     
@@ -189,7 +188,7 @@ class ADAM:
                             theano.config.floatX), name='mrw'+str(layer)) ,)
                     self.mrb = self.mrb + (theano.shared(np.genfromtxt(
                         self.load_folder+'reglayer_'+str(layer)+'_bias_mnt.csv', 
-                        delimiter=',').reshape(self.regnet[layer,0]).astype(
+                        delimiter=',').reshape(self.regnet[layer,1]).astype(
                             theano.config.floatX), name='mrb'+str(layer)) ,)
         
         if(len(self.mrw) == 0):
@@ -198,6 +197,6 @@ class ADAM:
                         self.regnet[layer,:], dtype=theano.config.floatX),
                             name='mrw'+str(layer)) ,)
                     self.mrb = self.mrb + (theano.shared(np.ones(
-                            self.regnet[layer,0], dtype=theano.config.floatX), 
+                            self.regnet[layer,1], dtype=theano.config.floatX), 
                                 name='mrb'+str(layer)) ,)
                             

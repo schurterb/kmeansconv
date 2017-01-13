@@ -31,10 +31,17 @@ class Trainer(object):
         
     """Define the cost function used to evaluate this network"""
     def __set_cost(self):
-        if(self.cost_func == 'class'):
-            self.cost = T.mean(T.nnet.binary_crossentropy(self.out, self.Y), dtype=theano.config.floatX)
+        if(self.supervised_training):
+            self.targets = self.Y
         else:
-            self.cost = T.mean(1/2.0*((self.out - self.Y)**2), dtype=theano.config.floatX)        
+            #TODO: Add target definition
+            maxOut = T.max(self.out, 1)
+            self.targets = T.switch(self.out < maxOut, 0, 1)
+        if(self.cost_func == 'class'):
+            self.cost = T.mean(T.nnet.binary_crossentropy(self.out, self.targets), dtype=theano.config.floatX)
+        else:
+            self.cost = T.mean(1/2.0*((self.out - self.targets)**2), dtype=theano.config.floatX)
+            
 
     
     """Define the updates to be performed each training round"""
@@ -67,6 +74,12 @@ class Trainer(object):
         
         self.updates = self.update_method.getUpdates()
 
+
+    """Define targets for unsupervised learning"""
+    def __set_targets(self):
+        if not self.supervised_training:
+            pass
+            
     
     """
     Define the function(s) for GPU training
@@ -74,14 +87,17 @@ class Trainer(object):
     def __generate_training_model(self):
         
         self.updates = []
-    
-        self.__set_cost()
-    
+        self.__set_cost()    
         self.__set_updates()
-    
-        self.train_network = theano.function(inputs=[self.X, self.Y], outputs=self.cost,
-                                             updates = self.updates,
-                                             allow_input_downcast=True)
+        if(self.supervised_training):
+            self.train_network = theano.function(inputs=[self.X, self.Y], outputs=self.cost,
+                                                 updates = self.updates,
+                                                 allow_input_downcast=True)
+        else:
+            self.train_network = theano.function(inputs=[self.X], outputs=self.cost,
+                                                 updates = self.updates,
+                                                 allow_input_downcast=True)
+            
                                                                                          
         
     """
@@ -96,7 +112,7 @@ class Trainer(object):
         ## Network parameters ##
         self.X = network.X
         self.out = network.out
-        self.network = network  
+        self.network = network
         
         ####################################################################### 
         ####################################################################### 
@@ -118,6 +134,13 @@ class Trainer(object):
             trainer_status += "Trainer Parameters\n"
             self.cost_func = kwargs.get('cost_function', 'MSE')
             trainer_status += "cost function = "+ str(self.cost_func) +"\n"
+            
+            if(kwargs.get('training_type', 'unsupervised') == 'unsupervised'):
+                self.supervised_training = False
+            else:
+                self.supervised_training = True
+            trainer_status += "training type = "+ \
+                            str(kwargs.get('training_type', 'unsupervised')) +"\n"
             
             self.learning_method = kwargs.get('learning_method', 'standardSGD')
             trainer_status += "learning method = "+self.learning_method+"\n"
@@ -319,7 +342,11 @@ class Trainer(object):
                                 
                 for j in range(self.log_interval):
                     batch = self.__get_batch()
-                    error = self.train_network(batch[0], batch[1])
+                    if(self.supervised_training):
+                        error = self.train_network(batch[0], batch[1])
+                    else:
+                        error = self.train_network(batch[0])
+                        
                 
                 train_error[i] = np.mean(error)
                 

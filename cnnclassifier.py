@@ -19,6 +19,8 @@ from theano.tensor.nnet import conv2d
 import numpy as np
 
 theano.config.floatX = 'float32'
+theano.config.optimizer = 'fast_compile'
+theano.config.exception_verbosity = 'high'
 
 class CNN2D(object):
     
